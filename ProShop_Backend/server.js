@@ -13,6 +13,7 @@ app.get("/", (req, res, next) => {
 
 app.get("/api/products", (req, res, next) => {
   res.json(products);
+  console.log(products);
 });
 
 app.get("/api/products/:id", (req, res, next) => {
