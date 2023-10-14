@@ -10,7 +10,9 @@ const HomeScreen = () => {
     <>
       <h1>Latest Products</h1>
       {isLoading && (
-        <p className="mt-10 text-lg text-center font-bold">Loading...</p>
+        <p className="mt-10 text-lg text-center font-bold h-screen">
+          Loading...
+        </p>
       )}
       {isError && (
         <div className="mt-10">
