@@ -11,6 +11,8 @@ import {
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { useGetProductDetailsQuery } from "../store/productsAppSlice";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../store/cartSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -20,6 +22,12 @@ const ProductScreen = () => {
     isLoading,
     isError,
   } = useGetProductDetailsQuery(productId);
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(cartActions.addToCart(product));
+  };
 
   return (
     <>
@@ -85,6 +93,7 @@ const ProductScreen = () => {
                   </ListGroupItem>
                   <ListGroupItem>
                     <button
+                      onClick={addToCartHandler}
                       className="bg-gray-700 disabled:bg-gray-400 text-white hover:bg-gray-500 duration-150 py-2 px-5 rounded-md my-2"
                       type="button"
                       disabled={product.countInStock === 0}

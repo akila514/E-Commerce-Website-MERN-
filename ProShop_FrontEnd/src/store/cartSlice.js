@@ -1,0 +1,48 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : {
+      cartItems: [],
+      itemsPrice: 0,
+      shippingPrice: 0,
+      taxPrice: 0,
+      totalPrice: 0,
+    };
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart(state, action) {
+      const existingItemIndex = state.cartItems.findIndex(
+        (item) => item._id === action.payload._id
+      );
+
+      if (existingItemIndex >= 0) {
+        state.cartItems[existingItemIndex].qty += 1;
+      } else {
+        state.cartItems = [...state.cartItems, { ...action.payload, qty: 1 }];
+      }
+
+      state.itemsPrice = state.cartItems
+        .reduce((acc, item) => acc + item.price * item.qty, 0)
+        .toFixed(2);
+
+      state.shippingPrice = state.itemsPrice > 100 ? 10 : 0;
+
+      state.taxPrice = ((state.itemsPrice * 15) / 100).toFixed(2);
+
+      state.totalPrice = (
+        parseFloat(state.itemsPrice) +
+        parseFloat(state.taxPrice) +
+        parseFloat(state.shippingPrice)
+      ).toFixed(2);
+
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
+  },
+});
+
+export const cartReducer = cartSlice.reducer;
+export const cartActions = cartSlice.actions;
