@@ -7,6 +7,7 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import { useGetProductDetailsQuery } from "../store/productsAppSlice";
@@ -23,9 +24,18 @@ const ProductScreen = () => {
   return (
     <>
       {isLoading && (
-        <p className="mt-10 text-lg text-center font-bold h-screen">
-          Loading...
-        </p>
+        <div className="mt-10">
+          <Spinner
+            animation="border"
+            role="status"
+            style={{
+              width: "100px",
+              height: "100px",
+              margin: "auto",
+              display: "block",
+            }}
+          />
+        </div>
       )}
       {isError && (
         <div className="mt-10">
@@ -51,7 +61,9 @@ const ProductScreen = () => {
                   <Rating value={product.rating} text={product.numReviews} />
                 </ListGroupItem>
                 <ListGroupItem>${product.price}</ListGroupItem>
-                <ListGroupItem>{product.description}</ListGroupItem>
+                <ListGroupItem className="leading-8">
+                  {product.description}
+                </ListGroupItem>
               </ListGroup>
             </Col>
             <Col md={3}>

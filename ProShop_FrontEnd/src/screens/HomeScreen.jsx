@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../store/productsAppSlice";
 
@@ -10,9 +10,18 @@ const HomeScreen = () => {
     <>
       <h1>Latest Products</h1>
       {isLoading && (
-        <p className="mt-10 text-lg text-center font-bold h-screen">
-          Loading...
-        </p>
+        <div className="mt-10 h-screen">
+          <Spinner
+            animation="border"
+            role="status"
+            style={{
+              width: "100px",
+              height: "100px",
+              margin: "auto",
+              display: "block",
+            }}
+          />
+        </div>
       )}
       {isError && (
         <div className="mt-10">
