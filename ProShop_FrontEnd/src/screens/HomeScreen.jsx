@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
-import axios from "axios";
+import { useGetProductsQuery } from "../store/productsAppSlice";
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+  const { data: products, isLoading, isError } = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
-      setProducts(data);
-    };
-
-    fetchProducts();
-  }, []);
   return (
     <>
       <h1>Latest Products</h1>
-      <Row>
-        {products.map((product) => (
-          <Col key={Math.random()} sm={12} md={6} lg={4} xl={3}>
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+      {isLoading && (
+        <p className="mt-10 text-lg text-center font-bold">Loading...</p>
+      )}
+      {isError && (
+        <div className="mt-10">
+          <p className="text-xl font-bold text-center">Something went wrong</p>
+          <p className="text-center">Please try again later.</p>
+        </div>
+      )}
+      {!isError && !isLoading && (
+        <Row>
+          {products.map((product) => (
+            <Col key={Math.random()} sm={12} md={6} lg={4} xl={3}>
+              <Product product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 };
