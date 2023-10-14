@@ -9,11 +9,15 @@
     "start": "node ProShop_Backend/server.js",
     "server": "nodemon ProShop_Backend/server.js",
     "client": "npm start --prefix ProShop_FrontEnd",
-    "dev": "concurrently \"npm run server\"\"npm rub client\""
+    "dev": "concurrently \"npm run server\"\"npm rub client\"",
+    "data:import": "node ProShop_Backend/seeder.js",
+    "data:destroy": "node ProShop_Backend/seeder.js -d"
   },
   "author": "Akila514",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
     "concurrently": "^8.2.1",
     "express": "^4.18.2",
     "mongoose": "^7.6.2",
