@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Card,
   Col,
+  Form,
   Image,
   ListGroup,
   ListGroupItem,
@@ -29,6 +30,7 @@ const ProductScreen = () => {
     dispatch(cartActions.addToCart(product));
   };
 
+  const [qty, setQty] = useState(1);
   return (
     <>
       {isLoading && (
@@ -91,6 +93,30 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroupItem>
+                  {product.countInStock > 0 && (
+                    <ListGroupItem>
+                      <Row>
+                        <Col>Qty:</Col>
+                        <Col>
+                          <Form.Control
+                            as="select"
+                            value={qty}
+                            onChange={(e) => {
+                              setQty(Number(e.target.value));
+                            }}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (qty) => (
+                                <option key={qty + 1} value={qty + 1}>
+                                  {qty + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  )}
                   <ListGroupItem>
                     <button
                       onClick={addToCartHandler}
