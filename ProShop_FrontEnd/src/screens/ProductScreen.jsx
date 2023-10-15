@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   Col,
@@ -25,9 +25,11 @@ const ProductScreen = () => {
   } = useGetProductDetailsQuery(productId);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const addToCartHandler = () => {
-    dispatch(cartActions.addToCart(product));
+    dispatch(cartActions.addToCart({ product: product, qty: qty }));
+    navigate("/cart");
   };
 
   const [qty, setQty] = useState(1);

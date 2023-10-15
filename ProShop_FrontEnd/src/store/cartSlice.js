@@ -16,13 +16,16 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       const existingItemIndex = state.cartItems.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload.product._id
       );
 
       if (existingItemIndex >= 0) {
-        state.cartItems[existingItemIndex].qty += 1;
+        state.cartItems[existingItemIndex].qty += action.payload.qty;
       } else {
-        state.cartItems = [...state.cartItems, { ...action.payload, qty: 1 }];
+        state.cartItems = [
+          ...state.cartItems,
+          { ...action.payload.product, qty: action.payload.qty },
+        ];
       }
 
       state.itemsPrice = state.cartItems
