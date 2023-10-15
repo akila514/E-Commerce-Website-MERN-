@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Navbar, Nav, Container, NavLink } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 
 import logo from "../assets/logo.png";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const products = useSelector((state) => state.cart.cartItems);
+  let total = 0;
+  const [numOfCartItems, setNumOfCartItems] = useState(0);
+
+  useEffect(() => {
+    for (const item of products) {
+      total += Number(item.qty);
+    }
+    setNumOfCartItems(total);
+  }, [products]);
+
   return (
     <header>
       <Navbar
@@ -32,7 +44,12 @@ const Header = () => {
               <div className="flex items-center space-x-2">
                 <FaShoppingCart className="text-gray-400" />
                 <LinkContainer to="/cart">
-                  <NavLink>Cart</NavLink>
+                  <NavLink>
+                    Cart
+                    <span className="ml-2 rounded-full px-3 text-sm py-1 bg-gray-600 text-white">
+                      {numOfCartItems}
+                    </span>
+                  </NavLink>
                 </LinkContainer>
               </div>
               <div className="flex items-center space-x-2">
