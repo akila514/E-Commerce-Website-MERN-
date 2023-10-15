@@ -44,6 +44,20 @@ const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state));
     },
+
+    removeItemFromCart(state, action) {
+      const index = state.cartItems.findIndex(
+        (item) => item._id == action.payload._id
+      );
+
+      if (index >= 0) {
+        state.cartItems = state.cartItems.filter(
+          (item) => item._id !== action.payload._id
+        );
+      } else {
+      }
+      localStorage.setItem("cart", JSON.stringify(state));
+    },
   },
 });
 

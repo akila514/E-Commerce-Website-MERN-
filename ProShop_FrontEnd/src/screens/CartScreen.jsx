@@ -24,6 +24,10 @@ const CartScreen = () => {
     );
   };
 
+  const removeFromCartHandler = (product) => {
+    dispatch(cartActions.removeItemFromCart(product));
+  };
+
   return (
     <Row>
       <Col md={8}>
@@ -67,7 +71,12 @@ const CartScreen = () => {
                     </Form.Control>
                   </Col>
                   <Col md={2} className="flex items-center">
-                    <button className="flex flex-row items-center mt-2 md:mt-0">
+                    <button
+                      className="flex flex-row items-center mt-2 md:mt-0"
+                      onClick={() => {
+                        removeFromCartHandler(product);
+                      }}
+                    >
                       <FaTrashAlt
                         size={20}
                         className="hover:cursor-pointer sm:mt-5 flex my-auto mx-auto"
