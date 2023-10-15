@@ -9,15 +9,6 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const products = useSelector((state) => state.cart.cartItems);
-  let total = 0;
-  const [numOfCartItems, setNumOfCartItems] = useState(0);
-
-  useEffect(() => {
-    for (const item of products) {
-      total += Number(item.qty);
-    }
-    setNumOfCartItems(total);
-  }, [products]);
 
   return (
     <header>
@@ -46,9 +37,14 @@ const Header = () => {
                 <LinkContainer to="/cart">
                   <NavLink>
                     Cart
-                    <span className="ml-2 rounded-full px-3 text-sm py-1 bg-gray-600 text-white">
-                      {numOfCartItems}
-                    </span>
+                    {products.length > 0 && (
+                      <span className="ml-2 rounded-full px-3 text-sm py-1 bg-gray-600 text-white">
+                        {products.reduce(
+                          (a, curruntItem) => a + curruntItem.qty,
+                          0
+                        )}
+                      </span>
+                    )}
                   </NavLink>
                 </LinkContainer>
               </div>

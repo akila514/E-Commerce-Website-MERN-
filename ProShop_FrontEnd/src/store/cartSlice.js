@@ -20,11 +20,11 @@ const cartSlice = createSlice({
       );
 
       if (existingItemIndex >= 0) {
-        state.cartItems[existingItemIndex].qty += action.payload.qty;
+        state.cartItems[existingItemIndex].qty = Number(action.payload.qty);
       } else {
         state.cartItems = [
           ...state.cartItems,
-          { ...action.payload.product, qty: action.payload.qty },
+          { ...action.payload.product, qty: Number(action.payload.qty) },
         ];
       }
 

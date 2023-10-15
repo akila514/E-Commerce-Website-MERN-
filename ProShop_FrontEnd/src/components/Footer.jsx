@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <Container>
+      <Container className="fixed bottom-0">
         <Row>
           <Col>Proshop &copy; {currentYear}</Col>
         </Row>
