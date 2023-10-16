@@ -57,6 +57,19 @@ const cartSlice = createSlice({
       } else {
       }
       localStorage.setItem("cart", JSON.stringify(state));
+      state.itemsPrice = state.cartItems
+        .reduce((acc, item) => acc + item.price * item.qty, 0)
+        .toFixed(2);
+
+      state.shippingPrice = state.itemsPrice > 100 ? 10 : 0;
+
+      state.taxPrice = ((state.itemsPrice * 15) / 100).toFixed(2);
+
+      state.totalPrice = (
+        parseFloat(state.itemsPrice) +
+        parseFloat(state.taxPrice) +
+        parseFloat(state.shippingPrice)
+      ).toFixed(2);
     },
   },
 });
