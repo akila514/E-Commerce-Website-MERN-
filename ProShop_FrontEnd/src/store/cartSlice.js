@@ -54,7 +54,6 @@ const cartSlice = createSlice({
         state.cartItems = state.cartItems.filter(
           (item) => item._id !== action.payload._id
         );
-      } else {
       }
       localStorage.setItem("cart", JSON.stringify(state));
       state.itemsPrice = state.cartItems

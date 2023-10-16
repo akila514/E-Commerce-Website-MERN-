@@ -8,15 +8,15 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cartActions } from "../store/cartSlice";
 import { FaTrashAlt } from "react-icons/fa";
 
 const CartScreen = () => {
   const cartDetails = useSelector((state) => state.cart);
-
   const products = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const qtyChangeHandler = (product, qty) => {
     dispatch(
@@ -26,6 +26,10 @@ const CartScreen = () => {
 
   const removeFromCartHandler = (product) => {
     dispatch(cartActions.removeItemFromCart(product));
+  };
+
+  const checkoutHandler = () => {
+    navigate("/login?redirect=/shipping");
   };
 
   return (
@@ -111,7 +115,10 @@ const CartScreen = () => {
               {cartDetails.totalPrice}
             </ListGroupItem>
             <ListGroupItem>
-              <button className="bg-gray-700 rounded-lg text-white px-3 py-2 mt-10">
+              <button
+                className="bg-gray-700 rounded-lg text-white px-3 py-2 mt-10"
+                onClick={checkoutHandler}
+              >
                 Proceed to checkout
               </button>
             </ListGroupItem>
