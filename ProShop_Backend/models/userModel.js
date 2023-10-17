@@ -28,6 +28,17 @@ userSchema.methods.matchPasswords = async function (enteredPassword) {
   return await bycrypt.compare(enteredPassword, this.password);
 };
 
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    next();
+  }
+
+  // this.password = bycrypt.hashSync(this.password);
+
+  const salt = await bycrypt.genSalt(10);
+  this.password = await bycrypt.hash(this.password, salt);
+});
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
