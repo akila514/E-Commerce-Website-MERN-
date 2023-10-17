@@ -2,7 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import generateToken from "../util/genarateToken.js";
-import bycrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 //@desc     Auth users
 //@route    POST /api/users/login
@@ -111,18 +111,17 @@ export const updateUserProfile = asyncHandler(async (req, res, next) => {
     user.email = req.body.email || user.email;
 
     if (req.body.password) {
-      const salt = await bycrypt.genSalt(10);
-      user.password = await bycrypt.hash(req.body.password, salt);
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
     }
 
     const updatedUser = await user.save();
 
-    password = res.json({
+    user.password = res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      password: updatedUser.password,
     });
   } else {
     res.status(404);
