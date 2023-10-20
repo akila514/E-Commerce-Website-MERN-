@@ -5,6 +5,7 @@ import productRouter from "./routes/productRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import userRouter from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import orderRouter from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 app.use(notFound);
 app.use(errorHandler);
