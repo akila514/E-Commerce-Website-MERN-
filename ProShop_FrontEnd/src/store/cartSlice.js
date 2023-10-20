@@ -8,6 +8,8 @@ const initialState = localStorage.getItem("cart")
       shippingPrice: 0,
       taxPrice: 0,
       totalPrice: 0,
+      shippingAddress: {},
+      paymentMethod: "PayPal",
     };
 
 const cartSlice = createSlice({
@@ -69,6 +71,11 @@ const cartSlice = createSlice({
         parseFloat(state.taxPrice) +
         parseFloat(state.shippingPrice)
       ).toFixed(2);
+    },
+
+    saveShippingAddress(state, action) {
+      state.shippingAddress = action.payload;
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });
