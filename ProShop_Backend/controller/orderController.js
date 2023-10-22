@@ -57,7 +57,25 @@ const getOrderById = asyncHandler(async (req, res, next) => {
 });
 
 const updateOrderToPaid = asyncHandler(async (req, res, next) => {
-  res.send("Update order to paid");
+  const order = Order.findById(req.params.id);
+
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body._id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    };
+
+    const updatetOrder = await order.save();
+
+    res.status(200).json(updatetOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
 });
 
 const updatOrderToDeliverd = asyncHandler(async (req, res, next) => {
