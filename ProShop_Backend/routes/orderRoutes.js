@@ -17,7 +17,7 @@ orderRouter
   .post(protect, addOrderItems)
   .get(protect, admin, getAllOrders);
 orderRouter.route("/mine").get(protect, getMyOrders);
-orderRouter.route("/:id").get(protect, admin, getOrderById);
+orderRouter.route("/:id").get(protect, getOrderById);
 orderRouter.route("/:id/pay").put(protect, updateOrderToPaid);
 orderRouter.route("/:id/deliver").put(protect, admin, updatOrderToDeliverd);
 

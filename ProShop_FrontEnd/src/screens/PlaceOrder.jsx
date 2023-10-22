@@ -43,8 +43,8 @@ const PlaceOrder = () => {
         totalPrice: cart.totalPrice,
       }).unwrap();
       console.log(res);
-      //   dispatch(cartActions.clearCartItems());
-      //   navigate(`/order/${res._id}`);
+      dispatch(cartActions.clearCartItems());
+      navigate(`/order/${res._id}`);
     } catch (err) {
       toast.error(err);
     }
