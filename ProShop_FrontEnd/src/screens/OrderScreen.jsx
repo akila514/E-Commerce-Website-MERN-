@@ -13,6 +13,7 @@ import {
   Spinner,
   Image,
   Card,
+  Button,
 } from "react-bootstrap";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import toast from "react-toastify";
@@ -57,6 +58,11 @@ const OrderScreen = () => {
       }
     }
   }, [order, paypal, paypalDispatch, loadingPaypal, errorPaypal]);
+
+  const onApprovedTest = () => {};
+  const createOrder = () => {};
+  const onApprove = () => {};
+  const onError = () => {};
 
   return (
     <>
@@ -160,6 +166,49 @@ const OrderScreen = () => {
                     <strong>Total: </strong>${order.totalPrice}
                   </p>
                 </div>
+
+                {!order.isPaid && (
+                  <ListGroupItem>
+                    {loadingPay && (
+                      <Spinner
+                        animation="border"
+                        role="status"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          margin: "auto",
+                          display: "block",
+                        }}
+                      />
+                    )}
+
+                    {isPending ? (
+                      <Spinner
+                        animation="border"
+                        role="status"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          margin: "auto",
+                          display: "block",
+                        }}
+                      />
+                    ) : (
+                      <div>
+                        <Button onClick={onApprovedTest} className="mb-4">
+                          Test pay order
+                        </Button>
+                        <div>
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                          ></PayPalButtons>
+                        </div>
+                      </div>
+                    )}
+                  </ListGroupItem>
+                )}
               </Card>
             </Col>
           </Row>
